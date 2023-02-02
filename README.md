@@ -54,6 +54,8 @@ $$
 
 ### 梯度下降：找到局部最小值
 
+![](https://image.jiqizhixin.com/uploads/editor/b7b9d1ad-4e48-455e-876c-70d37a191ca2/1531629686692.png)
+
 梯度下降算法：
 
 - $w = w - \alpha\frac{\partial}{\partial w}T(w,b)$
@@ -160,3 +162,45 @@ Feature Scaling，让梯度下降进行更快
 - 线性决策边界：$z=\vec{w}\cdot\vec{x} +b=0$
 - 非线性决策边界
   - 例：$f_{\vec{w},b}(\vec{x}) = g(z) = g(w_1x_1^2 + w_2x_2^2 + b)$，若$w_1,w_2,b$为1，1，-1，则$z = x_1^2 + x_2^2 -1 =0$，边界：$x_1^2 + x_2^2 =1$
+
+逻辑回归中的代价函数
+
+- 平方误差代价函数：$ J(\vec{x},b)=\frac{1}{2m}\sum_{i=1}^{m}(f_{\vec{w},b}(\vec{x}^{(i)}-y^{(i)})^2$
+
+- 线性回归：代价函数是凸函数。逻辑回归：代价函数是非凸函数，若使用梯度下降算法，存在许多局部极小值
+
+- 解决
+  $$
+  J(\vec{x},b)=\frac{1}{m}\sum_{i=1}^{m}L(f_{\vec{w},b}(\vec{x}^{(i)},y^{(i)}))
+  $$
+
+$$
+L(f_{\vec{w},b}(\vec{x}^{(i)},y^{(i)}))=\begin{cases}
+-log(f_{\vec{w},b}(\vec{x}^{(i)})),&{y^{(i)}=1}\\[2ex]
+-log(1-f_{\vec{w},b}(\vec{x}^{(i)})),&{y^{(i)}=0}
+\end{cases}
+$$
+
+简化逻辑回归代价函数
+$$
+L(f_{\vec{w},b}(\vec{x}^{(i)},y^{(i)}))=-y^{(i)}log(f_{\vec{w},b}(\vec{x}^{(i)}))-(1-y^{(i)})log(1-f_{\vec{w},b}(\vec{x}^{(i)}))
+$$
+过拟合问题
+
+- 模型不具有泛化到新样本的能力，有时被称为高方差（high variance）
+- 如何解决
+  - 收集更多数据
+  - 选择并使用最小特征子集，有时被称为特征选择
+  - 利用正则化减少参数大小
+
+正则化（Regularization）
+
+- 尽可能让算法缩小参数的值，参数值越小，模型可能越简单
+- 通常惩罚所有的特征，$\lambda$：正则化参数，$\lambda$>0
+
+$$
+J(\vec{x},b)=\frac{1}{2m}\sum_{i=1}^{m}(f_{\vec{w},b}(\vec{x}^{(i)}-y^{(i)})^2+\frac{\lambda}{2m}\sum_{j=1}^{n}w_j^2
+$$
+
+* 只正则化参数$w_j$，而不正则化参数b
+
