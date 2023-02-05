@@ -1,14 +1,12 @@
-# machine-learning
+## machine-learning
 
 **说明**：涉及数学公式，可安装**MathJax Plugin for Github**插件获得更好阅读体验
 
-### machine learning algorithms
+[TOC]
 
-监督学习：Supervised learning  
+### 机器学习算法
 
-无监督学习：Unsupervised learning
-
-### Supervised learning
+#### 监督学习：Supervised learning  
 
 x(input) ——> y(output label), learnings from being given 'right answers'   
 
@@ -19,7 +17,7 @@ supervised algorithms
 - 回归算法：Regression ——> Predict a number
 - 分类算法：Classification ——> Predict categories 
 
-### Unsupervised learning
+#### 无监督学习：Unsupervised learning
 
 only x 
 
@@ -29,7 +27,7 @@ Unsupervised algorithms
 - Anomaly detection：异常检测
 - Dimensionality reduction：降维
 
-### Terminology
+#### Terminology
 
 Training set: data used to train the model 
 
@@ -43,41 +41,45 @@ m = number of training examples
 
 (x<sup>(i)</sup>, y<sup>(i)</sup>) = i<sup>th</sup> training examples 
 
-### 成本函数：J(w,b) 衡量拟合程度
+### 成本函数：J(w,b) 
 
-training set —> learning algorithms —> (x —> f —> $\hat{y}$) 
+用于衡量拟合程度
 
 how to represent f？$f_{w,b} (x) = wx +b$ 单变量线性回归，实现它之前先定义一个成本函数 
 $$
-\frac{1}{2m}\sum_{i=1}^{m}(\hat{y}^(i)-y^(i))^2  或  \frac{1}{2m}\sum_{i=1}^{m}(f_{w,b}(x^{(i)}-y^{(i)})^2
+\frac{1}{2m}\sum_{i=1}^{m}(\hat{y}^{(i)}-y^{(i)})^2  或  \frac{1}{2m}\sum_{i=1}^{m}(f_{w,b}(x^{(i)})-y^{(i)})^2
 $$
 
 ### 梯度下降：找到局部最小值
 
 ![](https://image.jiqizhixin.com/uploads/editor/b7b9d1ad-4e48-455e-876c-70d37a191ca2/1531629686692.png)
 
-梯度下降算法：
+#### 梯度下降算法
 
-- $w = w - \alpha\frac{\partial}{\partial w}T(w,b)$
-- $b = b - \alpha\frac{\partial}{\partial b}T(w,b)$
+$$
+w = w - \alpha\frac{\partial}{\partial w}J(w,b)\\
+b = b - \alpha\frac{\partial}{\partial b}J(w,b)
+$$
 
 重复执行这两个步骤，直到算法收敛（达到局部最小值）。$\alpha$学习率，控制更新w,b的步长 
 
-正确做法：w, b同步更新。如何实现？ 
-
-1. $tempW = w - \alpha\frac{\partial}{\partial w}T(w,b)$
-2. $tempB = b - \alpha\frac{\partial}{\partial b}T(w,b)$
-3. $w = tempW$
-4. $b = tempB$
-
+如何实现 w, b同步更新？
+$$
+tempW = w - \alpha\frac{\partial}{\partial w}J(w,b)\\
+tempB = b - \alpha\frac{\partial}{\partial b}J(w,b)\\
+w = tempW\\
+b = tempB
+$$
 $\alpha$小：梯度下降慢，$\alpha$大：可能永远无法收敛
 
-应用：使用线性回归模型：$f_{w,b} (x) = wx +b$ 的均方误差代价函数：$\frac{1}{zm}\sum_{i=1}^{m}(f_{w,b}(x^{(i)}-y^{(i)})^2$，并利用梯度下降算法更新  
+#### 应用
+
+使用线性回归模型：$f_{w,b} (x) = wx +b$ 的均方误差代价函数：$\frac{1}{2m}\sum_{i=1}^{m}(f_{w,b}(x^{(i)})-y^{(i)})^2$，并利用梯度下降算法更新  
 
 - 这种方式称为“批量梯度下降” 
 - Batch gradient descent: Each step of gradient descent uses all the training examples 
 
-### 多维特征（多元线性回归）
+### 多元线性回归
 
 符号：$x_j$ = $j^{th}$ feature, n = number of the features,  $\vec{x}^{(i)}$ = feature of $i^{th}$ training examples 
 
@@ -92,7 +94,7 @@ $\alpha$小：梯度下降慢，$\alpha$大：可能永远无法收敛
 
 ### 矢量化
 
-$f_{w,b}(\vec{x})=\vec{w}\cdot\vec{x}+b$ 矢量化```f = np.dot(w,x) +b``` ，np.dot()实现了$\vec{w}$, $\vec{x}$的点积 
+$f_{\vec{w},b}(\vec{x})=\vec{w}\cdot\vec{x}+b$ 矢量化```f = np.dot(w,x) +b``` ，np.dot()实现了$\vec{w}$, $\vec{x}$的点积 
 
 优点：代码简单，仅一行；运行效率高，调用了GPU
 
@@ -100,14 +102,14 @@ $f_{w,b}(\vec{x})=\vec{w}\cdot\vec{x}+b$ 矢量化```f = np.dot(w,x) +b``` ，np
 
 参数：$\vec{w} = [w_1, w_2, ..., w_n]$, b is a number  
 
-模型：$f_{w,b}(\vec{x})=\vec{w}\cdot\vec{x}+b$ 
+模型：$f_{\vec{w},b}(\vec{x})=\vec{w}\cdot\vec{x}+b$ 
 
 成本函数：J($\vec{w}$,b) 
 
 梯度下降算法
 
-- $w_j = w_j - \alpha\frac{\partial}{\partial w_j}T(\vec{w_j},b)$
-- $b = b - \alpha\frac{\partial}{\partial b}T(w,b)$
+- $w_j = w_j - \alpha\frac{\partial}{\partial w_j}J(\vec{w_j},b)$
+- $b = b - \alpha\frac{\partial}{\partial b}J(\vec{w_j},b)$
 
 ### 特征缩放
 
@@ -125,20 +127,21 @@ Feature Scaling，让梯度下降进行更快
 
 ### 两个技巧
 
-如何判断梯度下降是否收敛
+#### 如何判断梯度下降是否收敛
 
-- 画学习曲线：每次迭代J($\vec{w}$,b)都会减少，若迭代后增大，意味着学习率$\alpha$太大或代码存在bug 
-- 自动收敛测试：若J($\vec{w}$,b)两次迭代，减少量小于某个特定的值，则判定为收敛
+画学习曲线：每次迭代J($\vec{w}$,b)都会减少，若迭代后增大，意味着学习率$\alpha$太大或代码存在bug 
 
-怎样设置学习率
+自动收敛测试：若J($\vec{w}$,b)两次迭代，减少量小于某个特定的值，则判定为收敛
 
-- 在学习率足够小的情况下，每一次迭代，代价函数都应该减小。所以可以将$\alpha$设为一个很小的数字，看看每次迭代的代价是否会降低，若不降低，代码中有bug  
+#### 怎样设置学习率
 
-- 足够小的$\alpha$仅作调试，实际应用中，若学习率太小，梯度下降需要经过很多次迭代才能收敛  
+在学习率足够小的情况下，每一次迭代，代价函数都应该减小。所以可以将$\alpha$设为一个很小的数字，看看每次迭代的代价是否会降低，若不降低，代码中有bug  
 
-- 可以尝试一系列的$\alpha$值，如...0.001  0.01  0.1   1...
+足够小的$\alpha$仅作调试，实际应用中，若学习率太小，梯度下降需要经过很多次迭代才能收敛  
 
-### 特征工程以及多项式回归
+可以尝试一系列的$\alpha$值，如...0.001  0.01  0.1   1...
+
+### 特征工程及多项式回归
 
 特征工程：选择或输入合适的特征是让算法正常工作的关键步骤，在特征工程中，通常通过变换或合并问题的原始特征，使其帮助算法更简单地做出准确的预测  
 
@@ -146,61 +149,224 @@ Feature Scaling，让梯度下降进行更快
 
 ### 逻辑回归
 
-引例：使用线性回归解决分类问题
+#### 引例：使用线性回归解决分类问题
 
-- $f_{w,b}(x) = wx +b$
-- 设置一个阈值，若$f_{w,b}(x)$ < 0.5，则$\hat{y}$ = 0（负样本），反之$\hat{y}$ = 1（正样本）
-- 这种方式不正确，增加决策样本后，**决策边界**移动，改变之前的正确结论
+$f_{w,b}(x) = wx +b$
 
-逻辑回归算法：classification / logistic regression
+设置一个阈值，若$f_{w,b}(x)$ < 0.5，则$\hat{y}$ = 0（负样本），反之$\hat{y}$ = 1（正样本）
 
-- sigmoid函数：$g(z) = \frac{1}{1+e^{(-z)}}$ （0 < g(z) <1 )
-- $z = \vec{w}\cdot\vec{x} +b$ ， $g(z) = \frac{1}{1+e^{(-z)}}$，逻辑回归模型：$f_{\vec{w},b}(\vec{x}) = g(\vec{w}\cdot\vec{x} +b)=g(z) = \frac{1}{1+e^{(-(\vec{w}\cdot\vec{x} +b))}}$
+这种方式不正确，增加决策样本后，**决策边界**移动，改变之前的正确结论
 
-决策边界：decision boundary
+#### 逻辑回归算法
 
-- 线性决策边界：$z=\vec{w}\cdot\vec{x} +b=0$
-- 非线性决策边界
-  - 例：$f_{\vec{w},b}(\vec{x}) = g(z) = g(w_1x_1^2 + w_2x_2^2 + b)$，若$w_1,w_2,b$为1，1，-1，则$z = x_1^2 + x_2^2 -1 =0$，边界：$x_1^2 + x_2^2 =1$
+sigmoid函数：$g(z) = \frac{1}{1+e^{(-z)}}$ （0 < g(z) <1 )
 
-逻辑回归中的代价函数
+$z = \vec{w}\cdot\vec{x} +b$ ， $g(z) = \frac{1}{1+e^{(-z)}}$，逻辑回归模型：$f_{\vec{w},b}(\vec{x}) = g(\vec{w}\cdot\vec{x} +b)=g(z) = \frac{1}{1+e^{(-(\vec{w}\cdot\vec{x} +b))}}$
 
-- 平方误差代价函数：$ J(\vec{x},b)=\frac{1}{2m}\sum_{i=1}^{m}(f_{\vec{w},b}(\vec{x}^{(i)}-y^{(i)})^2$
+#### 决策边界
 
-- 线性回归：代价函数是凸函数。逻辑回归：代价函数是非凸函数，若使用梯度下降算法，存在许多局部极小值
+线性决策边界：$z=\vec{w}\cdot\vec{x} +b=0$
 
-- 解决
-  $$
-  J(\vec{x},b)=\frac{1}{m}\sum_{i=1}^{m}L(f_{\vec{w},b}(\vec{x}^{(i)},y^{(i)}))
-  $$
+非线性决策边界
+
+例：$f_{\vec{w},b}(\vec{x}) = g(z) = g(w_1x_1^2 + w_2x_2^2 + b)$，若$w_1,w_2,b$为1，1，-1，则$z = x_1^2 + x_2^2 -1 =0$，边界：$x_1^2 + x_2^2 =1$
+
+#### 逻辑回归中的代价函数
+
+平方误差代价函数：$ J(\vec{w},b)=\frac{1}{2m}\sum_{i=1}^{m}(f_{\vec{w},b}(\vec{x}^{(i)})-y^{(i)})^2$
+
+线性回归：代价函数是凸函数。逻辑回归：代价函数是非凸函数，若使用梯度下降算法，存在许多局部极小值
+
+解决
+$$
+J(\vec{w},b)=\frac{1}{m}\sum_{i=1}^{m}L(f_{\vec{w},b}(\vec{x}^{(i)}),y^{(i)}))
+$$
 
 $$
-L(f_{\vec{w},b}(\vec{x}^{(i)},y^{(i)}))=\begin{cases}
--log(f_{\vec{w},b}(\vec{x}^{(i)})),&{y^{(i)}=1}\\[2ex]
+L(f_{\vec{w},b}(\vec{x}^{(i)}),y^{(i)})=\begin{cases}
+-log(f_{\vec{w},b}(\vec{x}^{(i)})),&{y^{(i)}=1}\\
 -log(1-f_{\vec{w},b}(\vec{x}^{(i)})),&{y^{(i)}=0}
 \end{cases}
 $$
 
-简化逻辑回归代价函数
-$$
-L(f_{\vec{w},b}(\vec{x}^{(i)},y^{(i)}))=-y^{(i)}log(f_{\vec{w},b}(\vec{x}^{(i)}))-(1-y^{(i)})log(1-f_{\vec{w},b}(\vec{x}^{(i)}))
-$$
-过拟合问题
-
-- 模型不具有泛化到新样本的能力，有时被称为高方差（high variance）
-- 如何解决
-  - 收集更多数据
-  - 选择并使用最小特征子集，有时被称为特征选择
-  - 利用正则化减少参数大小
-
-正则化（Regularization）
-
-- 尽可能让算法缩小参数的值，参数值越小，模型可能越简单
-- 通常惩罚所有的特征，$\lambda$：正则化参数，$\lambda$>0
+#### 简化逻辑回归代价函数
 
 $$
-J(\vec{x},b)=\frac{1}{2m}\sum_{i=1}^{m}(f_{\vec{w},b}(\vec{x}^{(i)}-y^{(i)})^2+\frac{\lambda}{2m}\sum_{j=1}^{n}w_j^2
+L(f_{\vec{w},b}(\vec{x}^{(i)}),y^{(i)}))=-y^{(i)}log(f_{\vec{w},b}(\vec{x}^{(i)}))-(1-y^{(i)})log(1-f_{\vec{w},b}(\vec{x}^{(i)}))
 $$
 
-* 只正则化参数$w_j$，而不正则化参数b
+#### 过拟合问题
 
+模型不具有泛化到新样本的能力，有时被称为高方差（high variance）
+
+如何解决
+
+- 收集更多数据
+- 选择并使用最小特征子集，有时被称为特征选择
+- 利用正则化减少参数大小
+
+#### 正则化
+
+尽可能让算法缩小参数的值，参数值越小，模型可能越简单
+
+通常惩罚所有的特征，$\lambda$：正则化参数，$\lambda$>0
+$$
+J(\vec{x},b)=\frac{1}{2m}\sum_{i=1}^{m}(f_{\vec{w},b}(\vec{x}^{(i)})-y^{(i)})^2+\frac{\lambda}{2m}\sum_{j=1}^{n}w_j^2
+$$
+
+只正则化参数$w_j$，而不正则化参数b
+
+### 神经网络
+
+#### 简介
+
+![](http://imgcdn.atyun.com/2019/01/1_ozBVCzy6acVfLuSESiyeBw.jpg)
+
+input layer：$\vec{x}$：特征向量
+
+hidden layer：可以包含多个神经元，$\vec{a}$：activation values 激活值
+
+output layer
+
+**只要输入不同数据，神经网络就会自动学习检测不同的特征**。多层神经网络有时也被称为**多层感知器**
+
+#### 前向传播
+
+将上一层的输出作为下一层的输入，并计算下一层的输出，一直到运算到输出层为止
+
+$a_j^{[l]}=g(\vec{w_j}^{[l]}\cdot\vec{a}^{[l-1]}+b_j^{[l]})$
+
+$g$：sigmoid or activation function
+
+#### 反向传播
+
+”误差反向传播“的简称
+
+该方法对网络中所有权重计算损失函数的梯度，这个梯度会反馈给最优化方法，用来更新权值以最小化损失函数
+
+反向传播仅指用于计算梯度的方法，而非神经网络的整个学习算法
+
+### 激活函数
+
+#### 常见激活函数
+
+Sigmoid
+
+ReLU：线性修正函数 $g(z)=max(0,z)$
+
+线性激活函数：$g(z)=z$
+
+#### 如何选择激活函数
+
+输出层
+
+- 二元分类问题：y=0/1  Sigmoid函数
+- 回归问题：y=+/- 线性激活函数 ； y=0 or +：ReLU
+
+隐藏层
+
+- 通常使用ReLU函数(faster)
+- 若处理二分类问题，使用Sigmoid函数(slower)
+
+**若对所有节点都使用线性激活函数，神经网络和线性回归无区别。所以不要在神经网络的隐藏层使用线性激活函数**
+
+### 多分类问题
+
+#### Softmax algorithm
+
+$$
+z_j=\vec{w_j}\cdot\vec{x}+b_j\\
+a_j=\frac{e^{z_j}}{\sum_{k=1}^N{e^{z_k}}}
+$$
+
+#### Softmax Regression
+
+if  y=j，$loss=-log\,a_j$ (交叉熵损失函数)
+
+Softmax算法改进：计算方式不同，得到的数值也可能不同，可改变计算方式，减小数值舍入误差
+
+#### 高级优化方法
+
+"Adam" algorithm：自动调整学习率，模型的每个参数使用不同的学习率，比梯度下降更快
+
+若 $w_j$ 或 b 向同一个方向移动，增加$\alpha$；若参数来回振荡，减小$\alpha$
+
+### 全连接层和卷积层
+
+#### 全连接层
+
+input layer
+
+hidden layer
+
+output layer
+
+#### 卷积层
+
+每个神经元关注不同的区域
+
+加快计算速度
+
+需要训练的数据更少，不容易过拟合
+
+![](https://img-blog.csdnimg.cn/20190529231941555.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTQ1MTMyMw==,size_16,color_FFFFFF,t_70)
+
+### 模型评估
+
+训练集：70%，测试集：30%，计算$J_{train},J_{test}$
+
+训练集：60%，交叉验证集：20%，测试集：20%
+
+#### 通过方差、偏差评估
+
+High bias (uderfit)：高偏差
+
+- $J_{train}$ will be high
+- $J_{train}≈J_{cv}$
+
+High variance (overfit)：高方差
+
+- $J_{train}$ is low
+- J_{cv}>>J_{train}$
+
+高偏差、高方差同时存在：可能一部分过拟合，一部分欠拟合
+
+![](https://img-blog.csdn.net/20180329172617763)
+
+#### 正则化
+
+$$
+J(\vec{x},b)=\frac{1}{2m}\sum_{i=1}^{m}(f_{\vec{w},b}(\vec{x}^{(i)})-y^{(i)})^2+\frac{\lambda}{2m}\sum_{j=1}^{n}w_j^2
+$$
+
+λ越大，正则化项权重越大，越不重视算法在训练集上的表现
+
+尝试不同的λ值，并在不同的点上评估交叉验证误差
+
+**制定用于性能评估的基准**(1,2用于判断是否存在高偏差，2,3用于判断是否存在高方差)
+
+- Base performance
+- Training error
+- Cross validation error
+
+### 学习曲线
+
+高偏差：若存在高偏差，添加更多训练数据无效，需要使用更大的神经网络，如增加额外特征、添加多项式、减小λ
+
+![](http://imgtec.eetrend.com/files/2019-08/%E5%8D%9A%E5%AE%A2/100044650-77501-111.png)
+
+高方差：通过扩大训练集来降低交叉验证误差，也可以减少特征数量、增大λ
+
+![](http://imgtec.eetrend.com/files/2019-08/%E5%8D%9A%E5%AE%A2/100044650-77502-112.png)
+
+### 开发机器学习系统的过程
+
+Choose architecture (model, data, etc.)
+
+Train model
+
+Diagnostics (bias, variance, and error analysis)
+
+### 误差分析
+
+手动检查一组算法错误，分类或标记样本，然后进行分析
