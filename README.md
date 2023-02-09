@@ -1,7 +1,6 @@
 ## machine-learning
 
 **说明**：涉及数学公式，可安装**MathJax Plugin for Github**插件获得更好阅读体验
-
 - [machine-learning](#machine-learning)
   - [机器学习算法](#机器学习算法)
     - [监督学习：Supervised learning](#监督学习supervised-learning)
@@ -55,9 +54,13 @@
   - [精确率与召回率](#精确率与召回率)
     - [倾斜数据的误差指标](#倾斜数据的误差指标)
     - [精确率和召回率的权衡](#精确率和召回率的权衡)
+  - [决策树](#决策树)
+    - [节点的选择](#节点的选择)
+    - [one-hot encoding](#one-hot-encoding)
+    - [随机森林](#随机森林)
+    - [决策树 vs 神经网络](#决策树-vs-神经网络)
 
 ### 机器学习算法
-
 #### 监督学习：Supervised learning  
 
 x(input) ——> y(output label), learnings from being given 'right answers'   
@@ -74,7 +77,6 @@ supervised algorithms
 only x 
 
 Unsupervised algorithms 
-
 - Clustering：聚类算法，将未标记的数据自动分组到集群中 (google news, DNA microarray, grouping customers)
 - Anomaly detection：异常检测
 - Dimensionality reduction：降维
@@ -246,13 +248,11 @@ $$
 $$
 L(f_{\vec{w},b}(\vec{x}^{(i)}),y^{(i)}))=-y^{(i)}log(f_{\vec{w},b}(\vec{x}^{(i)}))-(1-y^{(i)})log(1-f_{\vec{w},b}(\vec{x}^{(i)}))
 $$
-
 #### 过拟合问题
 
 模型不具有泛化到新样本的能力，有时被称为高方差（high variance）
 
 如何解决
-
 - 收集更多数据
 - 选择并使用最小特征子集，有时被称为特征选择
 - 利用正则化减少参数大小
@@ -311,12 +311,10 @@ ReLU：线性修正函数 $g(z)=max(0,z)$
 #### 如何选择激活函数
 
 输出层
-
 - 二元分类问题：y=0/1  Sigmoid函数
 - 回归问题：y=+/- 线性激活函数 ； y=0 or +：ReLU
 
 隐藏层
-
 - 通常使用ReLU函数(faster)
 - 若处理二分类问题，使用Sigmoid函数(slower)
 
@@ -330,7 +328,6 @@ $$
 z_j=\vec{w_j}\cdot\vec{x}+b_j\\
 a_j=\frac{e^{z_j}}{\sum_{k=1}^N{e^{z_k}}}
 $$
-
 #### Softmax Regression
 
 if  y=j，$loss=-log\,a_j$ (交叉熵损失函数)
@@ -483,3 +480,47 @@ Precision(P),\ Recall(R)\\
 F-Score=2\frac{PR}{P+R}
 $$
 
+### 决策树
+
+#### 节点的选择
+
+熵：表示随机变量不确定性的度量，熵越大，随机变量的不确定性就越大
+
+![](https://img-blog.csdnimg.cn/b796c68305d44e73b85e24e809776f02.png)
+
+信息增益：熵 - 条件熵
+
+- 表示在某一条件下，信息不确定性减少的程度
+- 从根结点开始，对结点计算所有可能的特征的信息增益，选择信息增益最大的特征作为结点的特征
+
+**回归树解决回归任务，节点选择由平均方差决定**
+
+#### one-hot encoding
+
+![](https://img-blog.csdnimg.cn/af0d30872c6d4e32ba173b73333ffba0.png)
+
+#### 随机森林
+
+单决策树对数据的微小变化非常敏感，多决策树可以使算法更健壮
+
+决策树存在的问题：决策树太过细致地划分样本，会导致其在训练集上出现过拟合
+
+随机森林算法
+
+- 抽等量样本：采用有放回抽样，从训练集中随机抽出一部分样本来训练，保证了不同的树可以重点学习不同的样本
+- 选几个特征：随机选取一部分特征用于训练，让不同的树重点关注不同的特征
+- 构建多棵树
+
+#### 决策树 vs 神经网络
+
+决策树
+
+- 适合处理表格数据（结构化数据）
+- 训练更快
+- 小型的决策树是人类可理解的
+
+神经网络
+
+- 适合处理非结构化数据、结构化与非结构化混合数据
+- 比决策树慢，但可以和迁移学习一起使用
+- 构建大型复杂的模型时使用神经网络更容易
