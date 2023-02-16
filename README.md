@@ -1,7 +1,10 @@
-## machine-learning
+## deep-learning
+
+![](https://pic4.zhimg.com/v2-004bdbffd3a33a8a4cdcb494946458b7_1440w.jpg?source=172ae18b)
 
 **说明**：涉及数学公式，可安装**MathJax Plugin for Github**插件获得更好阅读体验
-- [machine-learning](#machine-learning)
+
+- [deep-learning](#deep-learning)
   - [机器学习算法](#机器学习算法)
     - [监督学习：Supervised learning](#监督学习supervised-learning)
     - [无监督学习：Unsupervised learning](#无监督学习unsupervised-learning)
@@ -66,6 +69,10 @@
     - [协同过滤算法](#协同过滤算法)
     - [基于内容过滤](#基于内容过滤)
     - [实现推荐系统](#实现推荐系统)
+  - [强化学习](#强化学习)
+    - [关键概念](#关键概念)
+    - [状态动作价值函数](#状态动作价值函数)
+    - [改进强化学习算法](#改进强化学习算法)
 
 ### 机器学习算法
 #### 监督学习：Supervised learning  
@@ -719,4 +726,68 @@ $$
 
 - 数据检索
 - 排序
+
+### 强化学习
+
+指定奖励函数，告诉它什么时候做得好，什么时候做得不好
+
+**核心要素**：状态、行动、奖励、下一个状态
+
+#### 关键概念
+
+**回报**：回报是系统获得的奖励总和。在许多强化学习算法中，更快获得奖励会得到更高的总回报值
+
+**策略**
+
+- 提出策略函数 $\pi$，将任意状态 $s$ 作为输入，并将其映射到某个动作 $a$
+
+- 强化学习的目标：找到一个策略 $\pi$，告诉我们每一步应该采取什么行动才能使回报最大化
+
+**折扣因子**：$\gamma$
+$$
+return=R_1+\gamma R_2+\gamma^2R_3+...+\gamma^{n-1}R_n
+$$
+**马尔科夫决策过程（MDP）**：未来仅取决于当前状态，而不取决于到达当前状态前可能发生的任何事
+
+![](https://pic2.zhimg.com/v2-2cdd0fc00282d3041b091c334e0e7015_720w.jpg?source=172ae18b)
+
+#### 状态动作价值函数
+
+**提供从每个状态中选择一个更好动作的方法**
+
+$Q(s,a)$ = Return if you
+
+- start in state $s$
+- take action $a$ (once)
+- then behave optimally after that
+
+**贝尔曼方程**
+
+- $s$：当前状态	$R(s)$：当前状态回报
+- $a$：当前动作
+- $s'$：采取动作 $a$ 的后状态
+- $a'$：$s'$ 状态时采取的行动
+
+$$
+Q(s,a)=R(s)+\gamma\ maxQ(s',a')
+$$
+
+**DQN算法**
+
+- 随机初始化神经网络的所有参数
+- 采取一系列动作，获得$(s,a,R(s),s')$
+- 存储最近的10000个数据$(s,a,R(s),s')$，放在样本重现缓冲区（replay buffer）
+- 利用获得的数据训练神经网络
+  - $x=(s,a)$ and $y=R(s)+\gamma\ maxQ(s',a')$
+  - 获得新的神经网络$Q_{new}$
+- 将Q设置为$Q_{new}$
+- 重复2，3，4，5
+
+#### 改进强化学习算法
+
+**Mini-batch**：每次迭代只查看某一部分的子集，数据集非常大时算法运行更快
+
+**Soft Update**：训练新的神经网络时，使用很少的新值，如$W=0.01W_{new}+0.99W$，使算法更可靠收敛
+
+
 
